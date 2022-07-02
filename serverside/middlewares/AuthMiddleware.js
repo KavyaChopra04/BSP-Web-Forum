@@ -7,6 +7,8 @@ const validateToken=(req,res,next)=>{
     }
     try{
         const validToken=verify(accessToken, "72564A672EBAC906DACECA4DD53E82A4C7D8570F821B0E917CD7A701BDF6A5CA")
+        req.user=validToken;
+        console.log(validToken);
         if(validToken)
         {
             return next();

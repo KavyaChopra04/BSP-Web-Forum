@@ -9,11 +9,20 @@ function custom_sort(a, b) {
 function Home() {
     const [Postsarr, fillarr] = useState([]);
     let navigate=useNavigate()
+    const redirect = () => {
+    if(!localStorage.getItem("accessToken"))
+    {
+      alert("Please login before ");
+      navigate("/users/login");
+    }
+      
+  };
   useEffect(()=>{
     axios.get("http://localhost:3001/posts").then((response)=>{
       const nobj=response.data;
       nobj.sort(custom_sort);
       fillarr(response.data);
+      redirect();
     })
   },[])
   return (

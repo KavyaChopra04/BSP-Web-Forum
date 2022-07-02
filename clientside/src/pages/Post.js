@@ -24,16 +24,17 @@ const addComment = () => {
     },
     {
       headers:{
-        accessToken: sessionStorage.getItem("accessToken"),
+        accessToken: localStorage.getItem("accessToken"),
       },
     })
     .then((response) => {
       if(response.data.error)
       {
+        console.log(response);
         alert("User not authenticated");
       }
       else{
-        const commentToAdd = { commentBody: newComment };
+        const commentToAdd = { commentBody: newComment, author: response.data.author};
         setComments([...comments, commentToAdd]);
         setNewComment("");
       }
@@ -45,7 +46,7 @@ return (
     <div className="leftSide">
       <div className="post" id="individual">
         <div className="title"> {postObject.title} </div>
-        <div className="body">{postObject.postText}</div>
+        <div className="body">{postObject.text}</div>
         <div className="footer">{postObject.username}</div>
       </div>
     </div>
@@ -67,6 +68,7 @@ return (
           return (
             <div key={key} className="comment">
               {comment.commentBody}
+              <label>Posted by: {comment.author}</label>
             </div>
           );
         })}

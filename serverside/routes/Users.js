@@ -44,7 +44,8 @@ router.post("/login", async (req, res)=>{
     else{
         const accessToken=sign({username: user.username, id: user.id}, "72564A672EBAC906DACECA4DD53E82A4C7D8570F821B0E917CD7A701BDF6A5CA")
         bcrypt.compare(password, user.password).then((match)=>{
-            if(!match) {res.json({error: "wrong username/password"});}
+            if(!match) {
+                res.json({error: "wrong username/password"});}
             else{
                 res.json(accessToken);
             }
