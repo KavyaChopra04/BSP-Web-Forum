@@ -17,10 +17,10 @@ module.exports=(sequelize, DataTypes)=>{
             allowNUll: false,
         },
     });
-    // Users.associate = (models)=>{
-    //     Users.hasMany(models.Posts, {
-    //         onDelete : "cascade",
-    //     })
-    // }
+    Users.associate = (models)=>{
+        Users.hasMany(models.Posts, {
+            onDelete : "cascade",
+        })
+    }
     return Users;
 }

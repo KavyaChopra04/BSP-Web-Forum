@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const {Users}=require("../models");
 const {sign}=require("jsonwebtoken");
-
+const jwt_decode = require('jwt-decode');
 router.get("/", async (req, res)=>{
     const listOfUsers = await Users.findAll()
     res.json(listOfUsers);
@@ -51,5 +51,20 @@ router.post("/login", async (req, res)=>{
             }
         })
     }
+});
+router.get('/bytoken/:token', async (req,res)=>{
+    const token=req.params.token;
+    try{
+    const result=jwt_decode(token);
+    console.log(result);
+    res.json(result);}
+    catch(err){
+        return res.json({error: err});
+    }
+})
+router.get("/basicinfo/:id", async (req, res)=>{
+    const id=req.params.id;
+    const user=await Users.findByPk(id, {attributes: {exclude : ["password"] }});
+    res.json(user);
 });
 module.exports = router;

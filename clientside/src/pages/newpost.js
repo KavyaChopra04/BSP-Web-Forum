@@ -26,6 +26,9 @@ function Newpost() {
         alert("User not authenticated. Please log in");
         navigate("/users/login");
       }
+      else{
+        navigate("/");
+      }
     }, )
   };
   return (
