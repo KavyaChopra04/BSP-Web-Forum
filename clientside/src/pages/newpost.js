@@ -49,6 +49,8 @@ function Newpost() {
           <label>PostText: </label>
           <ErrorMessage name="text" component="span" />
           <Field id="inputcreatepost" name="text" placeholder="Sample Text" />
+          <label>PostImage: </label>
+          <Field type = "file" name="image"/>
           <button>Post it!</button>
         </Form>
     </Formik>

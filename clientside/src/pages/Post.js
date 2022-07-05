@@ -61,6 +61,7 @@ return (
       <div className="post" id="individual">
         <div className="title"> {postObject.title} </div>
         <div className="body">{postObject.text}</div>
+        <div className="body">{postObject.image}</div>
         <div className="footer">{postObject.username}</div>
         <div>{username=="admin" && <button onClick={()=>{deletePost(id)}}>Delete the Post above</button>}</div>
       <div>{username=="admin" && <button><Link to={`/editpost/${id}`}>Edit the Post above</Link></button>}</div>
