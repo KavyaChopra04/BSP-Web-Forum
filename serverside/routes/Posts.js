@@ -4,6 +4,7 @@ const {validateToken} = require("../middlewares/AuthMiddleware");
 const {Posts}=require("../models");
 router.get("/", async (req, res)=>{
     const listOfPosts = await Posts.findAll()
+    console.log(listOfPosts);
     res.json(listOfPosts);
 });
 router.get('/byId/:id', async (req,res)=>{
@@ -27,4 +28,23 @@ router.post("/", validateToken, async (req, res)=>{
     res.json(post);
 
 });
+router.put("/edit/:id", async (req, res)=>{
+    const id=req.params.id;
+    await Posts.update({ title: req.body.title, text: req.body.text }, {
+        where: {
+          id: id,
+        }
+      });
+    res.json(req.body);
+});
+router.delete('/delete/:id', async(req,res)=>{
+    const rid=req.params.id;
+    console.log(rid);
+    await Posts.destroy({where:
+    {
+        id: rid,
+    },
+    });
+    res.json("Successfully deleted");
+})
 module.exports = router;

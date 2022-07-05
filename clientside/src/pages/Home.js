@@ -9,7 +9,6 @@ function custom_sort(a, b) {
 }
 function Home() {
     const [Postsarr, fillarr] = useState([]);
-    var userId;
     const [username, setUsername]=useState("");
     const [id, setUserId]=useState("");
     let navigate=useNavigate()
@@ -34,6 +33,7 @@ function Home() {
       setUserId(response.data.id);
     })
   },[])
+
   return (
     <div> Home Page
       <div>Welcome {username}!</div>

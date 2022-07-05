@@ -5,8 +5,8 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
-function Newpost() {
-  const [username, setUsername]=useState("");
+function Editpost() {
+    let {id}=useParams();
   const initialValues={
     title: "",
     text: "",
@@ -16,31 +16,14 @@ function Newpost() {
     text: Yup.string().required(),
   });
   let navigate=useNavigate()
-  useEffect(()=>{
-    axios.get(`http://localhost:3001/users/bytoken/${localStorage.getItem("accessToken")}`).then((response)=>{
-      setUsername(response.data.username);
-    })
-  },[])
   const onSubmit=(data)=>{
-    axios.post("http://localhost:3001/posts", data, {
-
-        headers:{
-          accessToken: localStorage.getItem("accessToken"),
-        },
+    axios.put(`http://localhost:3001/posts/edit/${id}`, data, {
     }).then((response)=>{
-      if(response.data.error)
-      {
-        console.log(response);
-        alert("User not authenticated. Please log in");
-        navigate("/users/login");
-      }
-      else{
-        navigate("/");
-      }
+        navigate(`/post/${id}`);
     }, )
   };
   return (
-    <div className="Newpost page">
+    <div className="Editpost page"> Editpost page
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         <Form>
           <label>Title: </label>
@@ -49,7 +32,7 @@ function Newpost() {
           <label>PostText: </label>
           <ErrorMessage name="text" component="span" />
           <Field id="inputcreatepost" name="text" placeholder="Sample Text" />
-          <button>Post it!</button>
+          <button>Edit it!</button>
         </Form>
     </Formik>
     
@@ -57,4 +40,4 @@ function Newpost() {
   )
 }
 
-export default Newpost
+export default Editpost

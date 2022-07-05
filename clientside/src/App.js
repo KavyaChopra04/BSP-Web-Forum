@@ -8,6 +8,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import {AuthContext} from './helpers/AuthContext';
 import {useState} from "react";
+import Editpost from "./pages/editpost";
 function App() {
   const [AuthState, setAuthState]=useState(false);
   console.log(AuthState);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/newpost" element={<Createpost />} />
           <Route path="/post/:id" element={<Post />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/editpost/:id" element={<Editpost />} />
           <Route path="/users/" element={<Registration />} />
           <Route path="/users/login" element={<Login />} />
         </Routes>

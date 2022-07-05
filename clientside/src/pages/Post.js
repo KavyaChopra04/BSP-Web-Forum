@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 function Post() {
 let {id} =useParams();
+const [username, setUsername]=useState("");
 const [postObject, setPostObject] = useState({});
 const [comments, setComments] = useState([]);
 const [newComment, setNewComment] = useState("");
+let navigate=useNavigate()
 useEffect(()=>{
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response)=>{
       setPostObject(response.data);
@@ -15,7 +19,17 @@ axios.get(`http://localhost:3001/comments/${id}`).then((response)=>{
       setComments(response.data);
       console.log(response.data);
     });
+    axios.get(`http://localhost:3001/users/bytoken/${localStorage.getItem("accessToken")}`).then((response)=>{
+      setUsername(response.data.username);
+    });
 }, [])
+const deletePost=(id)=>{
+  axios.delete(`http://localhost:3001/posts/delete/${id}`).then((response)=>{
+    alert("SUCCESSFULLY DELETED")
+    navigate("/");
+
+  })
+}
 const addComment = () => {
   axios
     .post("http://localhost:3001/comments", {
@@ -48,6 +62,8 @@ return (
         <div className="title"> {postObject.title} </div>
         <div className="body">{postObject.text}</div>
         <div className="footer">{postObject.username}</div>
+        <div>{username=="admin" && <button onClick={()=>{deletePost(id)}}>Delete the Post above</button>}</div>
+      <div>{username=="admin" && <button><Link to={`/editpost/${id}`}>Edit the Post above</Link></button>}</div>
       </div>
     </div>
     <div className="rightSide">
