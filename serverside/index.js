@@ -1,6 +1,7 @@
 const express=require('express');
 const cors=require("cors");
 const app=express();
+app.use(express.static(path.resolve(__dirname, "./clientside/build")));
 app.use(express.json());
 app.use(cors());
 const db=require("./models");
